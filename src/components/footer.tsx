@@ -18,9 +18,13 @@ function Footer() {
               src="/cat_heart_love.png"
             />
           </span>
-          <p>用滿滿的道歉誠意與小貓加持，為你打造的可愛角落。</p>
+          <p className="xs:hidden">
+            用滿滿的道歉誠意與小貓加持，為你打造的可愛角落。
+          </p>
         </div>
-        <p>© {currentYear} Harrison Chan · arxbombus. All rights reserved</p>
+        <p className="text-center">
+          © {currentYear} Harrison Chan · arxbombus. All rights reserved
+        </p>
       </div>
     </footer>
   );

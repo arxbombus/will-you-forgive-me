@@ -64,7 +64,7 @@ function MessageBlock({
     <div className="space-y-2">
       <p
         aria-live="polite"
-        className="font-semibold text-2xl text-rose-700 sm:text-3xl"
+        className="font-semibold text-2xl text-rose-700 sm:text-2xl"
       >
         {isForgiven ? successMessage : currentStage.message}
       </p>
@@ -89,10 +89,16 @@ function ActionButtons({
   | "noButtonHidden"
   | "isForgiven"
 >) {
+  const clampedRefuse = Math.max(refuseScale, 0.05);
+  const horizontalShift = noButtonHidden ? 0 : (1 - clampedRefuse) * 30;
+
   return (
-    <div className="flex items-center justify-center gap-4 sm:gap-6">
+    <div
+      className="flex items-center justify-center gap-4 transition-transform duration-300 ease-out sm:gap-6"
+      style={{ transform: `translateX(${horizontalShift}px)` }}
+    >
       <button
-        className="group relative overflow-hidden rounded-full bg-linear-to-r from-rose-500 via-pink-400 to-amber-300 px-10 py-4 font-semibold text-white text-xl shadow-lg shadow-rose-200 transition-all duration-300 hover:shadow-rose-300"
+        className="group relative overflow-hidden rounded-full bg-linear-to-r from-rose-500 via-pink-400 to-amber-300 px-10 py-4 font-semibold text-white text-xl shadow-lg shadow-rose-200 transition-all duration-300 ease-out hover:shadow-rose-300"
         onClick={onForgive}
         style={{ transform: `scale(${forgiveScale})` }}
         type="button"
@@ -103,18 +109,26 @@ function ActionButtons({
         <span className="absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-30" />
       </button>
 
-      {noButtonHidden ? null : (
-        <button
-          className="rounded-full border border-rose-100 bg-white/90 px-8 py-3 font-semibold text-lg text-rose-500 shadow-sm transition-all duration-300 hover:border-rose-200 hover:shadow-md"
-          onClick={onRefuse}
-          style={{
-            transform: `scale(${Math.max(refuseScale, 0.05)})`,
-          }}
-          type="button"
-        >
-          不原諒
-        </button>
-      )}
+      <button
+        aria-hidden={noButtonHidden}
+        className="rounded-full border border-rose-100 bg-white/90 px-8 py-3 font-semibold text-lg text-rose-500 shadow-sm transition-all duration-300 ease-out hover:border-rose-200 hover:shadow-md"
+        disabled={noButtonHidden}
+        onClick={onRefuse}
+        style={{
+          opacity: noButtonHidden ? 0 : 1,
+          pointerEvents: noButtonHidden ? "none" : "auto",
+          transform: noButtonHidden ? "scale(0)" : `scale(${clampedRefuse})`,
+          width: noButtonHidden ? 0 : undefined,
+          paddingInline: noButtonHidden ? 0 : undefined,
+          paddingBlock: noButtonHidden ? 0 : undefined,
+          margin: noButtonHidden ? 0 : undefined,
+          borderWidth: noButtonHidden ? 0 : undefined,
+        }}
+        tabIndex={noButtonHidden ? -1 : 0}
+        type="button"
+      >
+        不原諒
+      </button>
     </div>
   );
 }
@@ -131,7 +145,7 @@ function ApologyCard({
   successMessage,
 }: ApologyCardProps) {
   return (
-    <div className="relative w-full max-w-6xl overflow-hidden rounded-[32px] border border-rose-100 bg-linear-to-br from-white via-rose-50/70 to-amber-50 shadow-[0_25px_80px_rgba(244,114,182,0.2)] ring-1 ring-white/60 backdrop-blur-md">
+    <div className="relative w-full max-w-7xl overflow-hidden rounded-4xl border border-rose-100 bg-linear-to-br from-white via-rose-50/70 to-amber-50 shadow-[0_25px_80px_rgba(244,114,182,0.2)] ring-1 ring-white/60 backdrop-blur-md">
       <DecorativeBlobs />
 
       <div className="relative z-10 flex flex-col items-center gap-8 px-6 py-10 sm:px-10">

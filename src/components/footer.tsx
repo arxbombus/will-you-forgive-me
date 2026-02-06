@@ -20,10 +20,7 @@ function Footer() {
           </span>
           <p>用滿滿的道歉誠意與小貓加持，為你打造的可愛角落。</p>
         </div>
-        <span>
-          © {currentYear} Harrison Chan · arxbombus. All rights reserved
-          reserved.
-        </span>
+        <p>© {currentYear} Harrison Chan · arxbombus. All rights reserved</p>
       </div>
     </footer>
   );

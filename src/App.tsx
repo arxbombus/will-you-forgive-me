@@ -2,7 +2,7 @@ import { useState } from "react";
 import { myTestFunc } from "~/test";
 import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
-import "./App.css";
+import "./app.css";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,10 +18,11 @@ function App() {
     <>
       <div>
         <a href="https://vite.dev" rel="noopener" target="_blank">
-          {/** biome-ignore lint/correctness/useImageSize: 1 */}
+          {/** biome-ignore lint/correctness/useImageSize: nope */}
           <img alt="Vite logo" className="logo" src={viteLogo} />
         </a>
         <a href="https://react.dev" rel="noopener" target="_blank">
+          {/** biome-ignore lint/correctness/useImageSize: no thank you */}
           <img alt="React logo" className="logo react" src={reactLogo} />
         </a>
       </div>

@@ -40,3 +40,32 @@
 #
 #     - script: "hello.go"
 #       runner: go run
+pre-push:
+  parallel: true
+  commands:
+    packages-audit:
+      tags:
+        - frontend
+        - security
+      run: pnpm audit
+
+pre-commit:
+  parallel: true
+  jobs:
+    - run: pnpm ultracite fix
+      glob:
+        - '*.js'
+        - '*.jsx'
+        - '*.ts'
+        - '*.tsx'
+        - '*.json'
+        - '*.jsonc'
+        - '*.css'
+      stage_fixed: true
+
+# Use this to validate commit messages
+commit-msg:
+  parallel: true
+  commands:
+    'lint commit message':
+      run: pnpm commitlint --edit "$1"
